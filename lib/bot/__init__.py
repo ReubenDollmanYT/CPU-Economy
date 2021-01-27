@@ -1,4 +1,4 @@
-from ..db import db
+#from ..db import db
 from datetime import datetime
 from asyncio import sleep
 from glob import glob
@@ -12,9 +12,9 @@ from discord.ext.commands import CommandNotFound, CommandOnCooldown, MissingRequ
 OWNER_IDS = [700336923264155719]
 COGS = [path.split("\\")[-1][:-3] for path in glob('./lib/cogs/*.py')]
 
-def get_prefix(bot, message):
-    prefix = db.field("SELECT Prefix FROM Guilds WHERE GuildID = ?", message.guild.id)
-    return when_mentioned_or(prefix)(bot, message)
+#def get_prefix(bot, message):
+    #prefix = db.field("SELECT Prefix FROM Guilds WHERE GuildID = ?", message.guild.id)
+   # return when_mentioned_or(prefix)(bot, message)
 
 class Ready(object):
     def __init__(self):
@@ -35,11 +35,11 @@ class Bot(BotBase):
         self.guild = None
         self.scheduler = AsyncIOScheduler()
 
-        db.autosave(self.scheduler) #type: ignore
+        #db.autosave(self.scheduler) #type: ignore
 
         super().__init__(
-            command_prefix=get_prefix,
-            owner_ids=OWNER_IDS,
+            command_prefix=!,
+            owner_ids=781305692371157034,
             intents=Intents.all()
             )
     def setup(self):
@@ -55,16 +55,16 @@ class Bot(BotBase):
         db.multiexec("INSERT OR IGNORE INTO exp (UserID) VALUES (?)",
 					 ((member.id,) for member in self.guild.members if not member.bot))
         
-        to_remove = []
-        stored_members = db.column("SELECT UserID FROM exp")
-        for id_ in stored_members:
-            if not self.guild.get_member(id_):
-                to_remove.append(id_)
+       # to_remove = []
+       # stored_members = db.column("SELECT UserID FROM exp")
+       # for id_ in stored_members:
+      #      if not self.guild.get_member(id_):
+      #          to_remove.append(id_)
                 
-        db.multiexec("DELETE FROM exp WHERE UserID = ?",
-			         ((id_,) for id_ in to_remove))
+      #  db.multiexec("DELETE FROM exp WHERE UserID = ?",
+	#		         ((id_,) for id_ in to_remove))
         
-        db.commit()
+    #db.commit()
 
     def run(self, version):
         self.VERSION = version
@@ -126,16 +126,16 @@ class Bot(BotBase):
     async def on_ready(self):
         if not self.ready:
             self.guild = self.get_guild(777500671922012170)
-            self.stdout = self.get_channel(782694805720662026)
+            self.stdout = self.get_channel(738157038051262770)
             self.scheduler.start()
 
             await self.stdout.send('Now online!')
-            self.update_db()
+           # self.update_db()
 
-            embed = Embed(title='__Now online!__', description='Thonk Bot is now online!', timestamp=datetime.utcnow())
+            embed = Embed(title='__Now online!__', description='CPU Economy is now online!', timestamp=datetime.utcnow())
             embed.add_field(name="Now Online!", value="I am now online and ready to be used!", inline=True)
             embed.set_footer(text="This is a footer!")
-            embed.set_author(name="Thonk Bot", icon_url=self.user.avatar_url)
+            embed.set_author(name="CPU Economyt", icon_url=self.user.avatar_url)
             embed.set_thumbnail(url=self.guild.icon_url)
             await self.stdout.send(embed=embed)
 
