@@ -1,9 +1,5 @@
-# ThonkBot
-
-This is the as the github reposetory for the most receant working update of ThonkBot
-
-You may copy any amount of the code from it as you want, but I think it would be better to read it and try and understand what it does.
-If you can't understand what it does, DM Book#1785 on discord asking. I will be happy to help.
+# CPU-Economy
+This is the as the github reposetory for the most receant working update of CPU-Economy (fork of Thonk Bot) for makeing extra umb comands
 
 ## What you need for this to work:
 
