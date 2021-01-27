@@ -13,7 +13,7 @@ class unb(Cog):
     
     @Cog.listener()
     async def on_ready(self):
-        self.unb_client = pybelieva.Client('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiI3OTQxNzc0NjUwNDg0OTk0NTYiLCJpYXQiOjE2MDk0MTcwNjJ9.tynjkExkZ1r1g-zILaK9EvHz9Y5P5lP9JDC9znjOYSY')
+        self.unb_client = pybelieva.Client('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiI4MDM5NjUxMjcwMzU1ODUwOTEiLCJpYXQiOjE2MTE3NTA2MjN9.e5LjMTWzvT3b6OWjHOHDKTclMLozjZTw1P93oK3R9vo')
         if not self.bot.ready:
             self.bot.cogs_ready.ready_up('unb')
         print('unb loaded')
@@ -24,7 +24,7 @@ class unb(Cog):
     async def books(self, ctx):
         '''Gives money for reading books'''
         cash = randint(100, 500)
-        await self.unb_client.patch_user_balance(ctx.guild.id, ctx.author.id, cash=cash)
+        await self.unb_client.patch_user_balance(ctx.guild.id, ctx.author.id, cash=cash, reason="Read some Books")
         embed = Embed(
             title="Book Command",
             description=f'You just got {cash} money for reading books!',
@@ -36,10 +36,23 @@ class unb(Cog):
     @cooldown(1, 3600, BucketType.user)
     async def hourly(self, ctx):
         cash = randint(1000, 2000)
-        await self.unb_client.patch_user_balance(ctx.guild.id, ctx.author.id, cash=cash)
+        await self.unb_client.patch_user_balance(ctx.guild.id, ctx.author.id, cash=cash, reason="Waited 1 Hour")
         embed = Embed(
             title="Hourly",
             description=f"You just got {cash} for waiting 1 hour. I wonder who gave it to you",
+            colour=0x00ff00,
+            timestamp=datetime.utcnow())
+        await ctx.send(embed=embed)
+
+    @command()
+    @cooldown(1, 600, BucketType.user)
+    async def Code(self, ctx):
+        '''Gives money for codeing things'''
+        cash = randint(100, 500)
+        await self.unb_client.patch_user_balance(ctx.guild.id, ctx.author.id, cash=cash, reason="Did Some Codeing")
+        embed = Embed(
+            title="Code Command",
+            description=f'You just got {cash} money for codeing!',
             colour=0x00ff00,
             timestamp=datetime.utcnow())
         await ctx.send(embed=embed)
