@@ -9,8 +9,9 @@ from discord.ext.commands import Bot as BotBase
 from discord.ext.commands import when_mentioned_or, command, has_permissions
 from discord.ext.commands import CommandNotFound, CommandOnCooldown, MissingRequiredArgument, BadArgument
 
+PREFIX = "|"
 OWNER_IDS = [700336923264155719]
-COGS = [path.split("\\")[-1][:-3] for path in glob('./lib/cogs/*.py')]
+COGS = [path.split("/")[-1][:-3] for path in glob('./lib/cogs/*.py')]
 
 #def get_prefix(bot, message):
     #prefix = db.field("SELECT Prefix FROM Guilds WHERE GuildID = ?", message.guild.id)
@@ -30,30 +31,31 @@ class Ready(object):
 
 class Bot(BotBase):
     def __init__(self):
+        self.prefix = PREFIX
         self.ready = False
         self.cogs_ready = Ready()
         self.guild = None
         self.scheduler = AsyncIOScheduler()
 
-        #db.autosave(self.scheduler) #type: ignore
+        #db.autosave(self.scheduler)
 
         super().__init__(
-            command_prefix=!,
-            owner_ids=781305692371157034,
+            command_prefix=PREFIX,
+            owner_ids=OWNER_IDS,
             intents=Intents.all()
             )
     def setup(self):
         for cog in COGS:
             self.load_extension(f'lib.cogs.{cog}')
-            print(f'{cog} cog loaded!')
-        print('Setup complete!')
+           # print(f'{cog} cog loaded!')
+        #print('Setup complete!')
 
-    def update_db(self):
-        db.multiexec("INSERT OR IGNORE INTO Guilds (GuildID) VALUES (?)",
-                     ((guild.id,) for guild in self.guilds))
+    #def update_db(self):
+        #db.multiexec("INSERT OR IGNORE INTO Guilds (GuildID) VALUES (?)",
+                     #((guild.id,) for guild in self.guilds))
         
-        db.multiexec("INSERT OR IGNORE INTO exp (UserID) VALUES (?)",
-					 ((member.id,) for member in self.guild.members if not member.bot))
+        #db.multiexec("INSERT OR IGNORE INTO exp (UserID) VALUES (?)",
+					 #((member.id,) for member in self.guild.members if not member.bot))
         
        # to_remove = []
        # stored_members = db.column("SELECT UserID FROM exp")
@@ -125,7 +127,7 @@ class Bot(BotBase):
     
     async def on_ready(self):
         if not self.ready:
-            self.guild = self.get_guild(777500671922012170)
+            self.guild = self.get_guild(718450019899801702)
             self.stdout = self.get_channel(738157038051262770)
             self.scheduler.start()
 
@@ -134,8 +136,8 @@ class Bot(BotBase):
 
             embed = Embed(title='__Now online!__', description='CPU Economy is now online!', timestamp=datetime.utcnow())
             embed.add_field(name="Now Online!", value="I am now online and ready to be used!", inline=True)
-            embed.set_footer(text="This is a footer!")
-            embed.set_author(name="CPU Economyt", icon_url=self.user.avatar_url)
+            embed.set_footer(text="This is a footer now stop looking at my feet")
+            embed.set_author(name="CPU Economy", icon_url=self.user.avatar_url)
             embed.set_thumbnail(url=self.guild.icon_url)
             await self.stdout.send(embed=embed)
 
@@ -150,16 +152,6 @@ class Bot(BotBase):
 
     async def on_message(self, message):
         if not message.author.bot:
-            if isinstance(message.channel, DMChannel):
-                embed = Embed(
-                    title="Modmail",
-                    colour=message.author.colour,
-                    timestamp=datetime.utcnow())
-                embed.set_thumbnail(url=message.author.avatar_url)
-                fields = [("Member", message.author.display_name, False),
-                          ("Message", message.content, False)]
-            else:
-                await self.process_commands(message)
-
+            await self.process_commands(message)
 
 bot = Bot()
