@@ -28,7 +28,7 @@ class unb(Cog):
         embed = Embed(
             title="Book Command",
             description=f'You just got {cash} money for reading books!',
-            colour=0x00ff00,
+            colour=0xd6ff00,
             timestamp=datetime.utcnow())
         await ctx.send(embed=embed)
     
@@ -40,7 +40,7 @@ class unb(Cog):
         embed = Embed(
             title="Hourly",
             description=f"You just got {cash} for waiting 1 hour. I wonder who gave it to you",
-            colour=0x00ff00,
+            colour=0xfd00ff,
             timestamp=datetime.utcnow())
         await ctx.send(embed=embed)
 
@@ -53,9 +53,22 @@ class unb(Cog):
         embed = Embed(
             title="Code Command",
             description=f'You just got {cash} money for codeing!',
-            colour=0x00ff00,
+            colour=0x00ffab,
             timestamp=datetime.utcnow())
+        embed.set_thumbnail(url="https://reubendollmanyt.is-inside.me/KLkj4dVp.gif")
         await ctx.send(embed=embed)
+
+    @command()
+    @cooldown(1, 86400, BucketType.user)
+    async def daily(self, ctx):
+        cash = randint(5000, 6000)
+        await self.unb_client.patch_user_balance(ctx.guild.id, ctx.author.id, cash=cash, reason="Waited 1 Day")
+        embed = Embed(
+            title="Daily",
+            description=f"You just got {cash} for waiting 24 hours.~~now go spend it~~",
+            colour=0xfd00ff,
+            timestamp=datetime.utcnow())
+        await ctx.send(embed=embed)    
 
 def setup(bot):
     bot.add_cog(unb(bot))

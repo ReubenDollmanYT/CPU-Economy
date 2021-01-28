@@ -3,7 +3,7 @@ from discord.ext.commands import command, has_permissions, CheckFailure
 from discord import Embed
 from discord import __version__ as discord_version
 from datetime import datetime, timedelta
-from ..db import db # type: ignore
+#from ..db import db # type: ignore
 from psutil import Process, virtual_memory
 from platform import python_version
 from time import time
@@ -20,23 +20,23 @@ class Misc(Cog):
         print('Misc Cog loaded')
         await self.bot.stdout.send('Misc cog loaded!')
 
-    @command(name="set_prefix", aliases=["SetPrefix", "Prefix"])
-    @has_permissions(manage_guild=True)
-    async def set_prefix(self, ctx, new: str):
-        """Changes the prefix of the bot for your server"""
-        db.execute("UPDATE Guilds SET Prefix = ? WHERE GuildID = ?", new, ctx.guild.id)
-        db.commit()
-        await ctx.send(f"I have changed this servers prefix to {new}")
+    #@command(name="set_prefix", aliases=["SetPrefix", "Prefix"])
+    #@has_permissions(manage_guild=True)
+    #async def set_prefix(self, ctx, new: str):
+        #"""Changes the prefix of the bot for your server"""
+        #db.execute("UPDATE Guilds SET Prefix = ? WHERE GuildID = ?", new, ctx.guild.id)
+        #db.commit()
+        #await ctx.send(f"I have changed this servers prefix to {new}")
 
-    @set_prefix.error
-    async def change_prefix_error(self, ctx, error):
-        if isinstance(error, CheckFailure):
-            embed = Embed(
-                title="You can't change the servers prefix",
-                description="You need to Manage Guild permissions to do that command",
-                colour=0xFF0000,
-                timesptamp=datetime.utcnow())
-            await ctx.send(embed=embed)
+    #@set_prefix.error
+    #async def change_prefix_error(self, ctx, error):
+        #if isinstance(error, CheckFailure):
+            #embed = Embed(
+                #title="You can't change the servers prefix",
+                #description="You need to Manage Guild permissions to do that command",
+                #colour=0xFF0000,
+                #timesptamp=datetime.utcnow())
+            #await ctx.send(embed=embed)
     
     @command(name="info", aliases=["stats"])
     async def info(self, ctx):
