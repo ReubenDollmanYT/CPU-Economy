@@ -4,6 +4,7 @@ from time import time
 from apscheduler.triggers.cron import CronTrigger
 from discord import Activity, ActivityType, Embed
 from discord import __version__ as discord_version
+from discord.utils import get
 from discord.ext.commands import Cog
 from discord.ext.commands import command
 from psutil import Process, virtual_memory
@@ -14,8 +15,8 @@ from psutil import Process, virtual_memory
 class Meta(Cog):
 	def __init__(self, bot):
 		self.bot = bot
-
-		self._message = "watching People steal my Precious"
+        #emoji = get(ctx.message.server.emojis, name="Beachball")
+		self._message = "watching People steal my Precious" #{emoji}
 
 		bot.scheduler.add_job(self.set, CronTrigger(second=0))
 

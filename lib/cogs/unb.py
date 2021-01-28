@@ -1,5 +1,6 @@
 from discord.ext.commands import Cog, BucketType
 from discord.ext.commands import command, cooldown
+from discord.utils import get
 from discord import Embed
 from datetime import datetime
 from random import randint
@@ -25,9 +26,10 @@ class unb(Cog):
         '''Gives money for reading books'''
         cash = randint(100, 500)
         await self.unb_client.patch_user_balance(ctx.guild.id, ctx.author.id, cash=cash, reason="Read some Books")
+        #emoji = get(ctx.message.server.emojis, name="Beachball")
         embed = Embed(
             title="Book Command",
-            description=f'You just got {cash} money for reading books!',
+            description=f'You just got {cash} money for reading books!', #{emoji}
             colour=0xd6ff00,
             timestamp=datetime.utcnow())
         await ctx.send(embed=embed)
@@ -37,6 +39,7 @@ class unb(Cog):
     async def hourly(self, ctx):
         cash = randint(1000, 2000)
         await self.unb_client.patch_user_balance(ctx.guild.id, ctx.author.id, cash=cash, reason="Waited 1 Hour")
+        #emoji = get(ctx.message.server.emojis, name="Beachball")
         embed = Embed(
             title="Hourly",
             description=f"You just got {cash} for waiting 1 hour. I wonder who gave it to you",
@@ -50,6 +53,7 @@ class unb(Cog):
         '''Gives money for codeing things'''
         cash = randint(100, 500)
         await self.unb_client.patch_user_balance(ctx.guild.id, ctx.author.id, cash=cash, reason="Did Some Codeing")
+        #emoji = get(ctx.message.server.emojis, name="Beachball")
         embed = Embed(
             title="Code Command",
             description=f'You just got {cash} money for codeing!',
