@@ -14,7 +14,7 @@ class unb(Cog):
     
     @Cog.listener()
     async def on_ready(self):
-        self.unb_client = pybelieva.Client('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiI4MDM5NjUxMjcwMzU1ODUwOTEiLCJpYXQiOjE2MTE3NTA2MjN9.e5LjMTWzvT3b6OWjHOHDKTclMLozjZTw1P93oK3R9vo')
+        self.unb_client = pybelieva.Client('') #put your token here
         if not self.bot.ready:
             self.bot.cogs_ready.ready_up('unb')
         print('unb loaded')
