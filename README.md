@@ -18,6 +18,9 @@ Make a file in `lib/bot` called `token.0`
 Put your bots token in that file
 
 Update all the ID's to be what you need
+and for UMB.py to work you need to replace the token with your own from
+https://unbelievaboat.com/applications
+and make sure to auth your bot for your server
 
 # IMPORTANT
 
